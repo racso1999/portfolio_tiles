@@ -28,7 +28,15 @@ export const projects: Project[] = [
     title: 'Crop Data SQL Database',
     slug: 'crop-data-sql-database',
     description:
-      'Designed a relational database and companion REST API for crop data, documenting schema decisions, normalization choices, and the tradeoffs between SQL and document-based models.',
+      `I first encountered SQL when working on a bioinformatics project during my undergraduate years. I had no idea what it meant or what it did. I don't think I even knew what a database was. For that matter, I didn't know much about them at all. This is where this project comes into play.
+
+I entered this project with a clear goal: to form a fundamental understanding of relational databases from the ground up. That includes sourcing the data, deciding the best database type to use, finding the relationships and cardinalities between the data structures, and implementing the database using SQL.
+
+Besides the obvious, this project demonstrated that there is more than one way to skin a cat when it comes to database design. I now understand where and when to use relational and non-relational databases, along with the pros and cons of both concepts.
+
+This project also highlighted the importance of data modeling and schema design. I learned how to identify entities, define relationships, and normalize data to reduce redundancy. The process of designing the database schema was iterative, requiring me to balance theoretical best practices with practical considerations based on the specific use case.
+
+Check out the full report below for a detailed walkthrough of the project, including the data sourcing process, design decisions, and implementation details.`,
     technologies: ['SQL', 'Database Design', 'API Design', 'Data Modeling'],
     pdfUrl: cropDatabasePdf,
     imageUrl: cropDatabaseImage,
@@ -58,5 +66,37 @@ export const projects: Project[] = [
     This project deepened my understanding of combinatorial optimization, graph traversal, and the practical trade-offs involved in applying algorithmic solutions to public infrastructure problems.`,
     technologies: ['Optimization', 'Algorithms', 'Heuristics', 'Graph Theory'],
     imageUrl: wasteRoutingImage,
+  },
+  {
+    title: 'Agentic Application System',
+    slug: 'agentic-application-system',
+    description:
+      `This project began out of frustration with the graduate job market. After applying to countless roles with limited success, it became clear that the modern application process had largely become a numbers game. The market is heavily oversaturated, and much of the workflow involves repetitive manual effort rather than meaningful decision-making. Hours are spent searching, filtering, rewriting applications, and submitting similar information across multiple platforms, often with little feedback or transparency.
+
+Rather than continuing to invest time into a largely manual and inefficient process, I approached the problem from an engineering perspective: if a workflow is repetitive, rule-based, and scalable, it should be possible to automate it. What initially started as a personal experiment evolved into a collaborative project between myself and another engineer, focused on exploring agentic workflows within the context of job discovery and application automation.
+
+The system is designed as a multi-stage pipeline that automates the discovery, analysis, and preparation of job applications. Each stage performs a specialised task and passes structured information forward, transforming unstructured internet data into actionable decisions. At a high level, the workflow progresses from web discovery, to data extraction, to intelligent evaluation, and finally to application preparation.
+
+The first component of the system is a custom-built job discovery engine. Instead of relying solely on traditional job boards, the platform actively searches the web using a web crawler, sometimes referred to as a web spider. The crawler begins from a set of predefined seed URLs determined by configurable parameters such as desired job role, geographic location, relevant technologies, and keyword preferences. From these starting points, the crawler navigates the web by following hyperlinks between pages, gradually expanding its search space.
+
+Conceptually, the web is treated as a graph structure in which webpages represent nodes and hyperlinks represent connections between them. The crawler performs a controlled traversal of this graph, evaluating each page for relevance before deciding whether to continue exploring that branch. This allows the system to remain focused on job-related content while avoiding unrelated areas of the web. The result is a continuously expanding collection of potentially relevant job listing pages gathered automatically rather than manually searched.
+
+Once relevant pages are identified, the system deploys a scraping module responsible for extracting structured information from each webpage. Job listings vary widely in formatting and layout depending on the hosting platform, so the scraper converts unstructured HTML content into a consistent dataset. Information such as job title, company name, location, required skills, job description, and application links are extracted and standardised. This stage effectively transforms raw web content into machine-readable data that can be analysed programmatically.
+
+Because listings originate from multiple sources, a normalisation stage follows. Here, the system cleans and standardises collected data to ensure consistency across entries. Duplicate postings are removed, formatting inconsistencies are corrected, and job attributes are mapped into a unified schema. The cleaned data is then stored in a structured database, enabling efficient querying and downstream processing independent of the original website layouts.
+
+The core innovation of the project lies in its agentic evaluation layer. Rather than simply aggregating job listings, the system attempts to replicate the decision-making process a candidate would normally perform manually. An AI-driven agent analyses each role against predefined criteria such as skill alignment, relevance to career goals, inferred seniority level, and estimated suitability. Instead of forcing the user to manually filter hundreds of listings, the system automatically prioritises opportunities that best match the defined profile.
+
+This transforms the workflow from a broad "collect everything and manually filter later" approach into a targeted pipeline where intelligent filtering occurs automatically. The agent acts as a decision-making intermediary, reducing cognitive load while increasing efficiency.
+
+For roles that pass evaluation, the system proceeds to an application preparation stage. Here, application materials can be generated or adapted dynamically based on job requirements. Relevant experiences are emphasised, responses can be tailored to specific postings, and application-ready information is prepared automatically. The intention is not simply to mass-submit identical applications, but to produce context-aware submissions aligned with individual roles while removing repetitive manual effort.
+
+The project is fundamentally an exploration of agentic workflow design, where independent components operate as specialised agents collaborating toward a shared objective. Each agent has a defined responsibility, access to structured context, and the ability to trigger subsequent actions within the pipeline. The crawler discovers opportunities, the scraper extracts information, the evaluation agent assesses relevance, and the application agent prepares outputs. This modular architecture allows individual components to evolve independently without requiring a redesign of the entire system.
+
+From a systems perspective, the project integrates concepts across multiple areas of computer science, including graph traversal algorithms, information retrieval, web scraping, natural language processing, automation pipelines, and agent-based system design. The architecture prioritises modularity and extensibility so that new evaluation strategies, data sources, or automation agents can be introduced incrementally.
+
+Ultimately, the goal of the project is not simply to automate job applications, but to rethink how individuals interact with large-scale digital processes. By reframing job searching as an engineering problem, the system demonstrates how agentic systems can augment human workflows, reduce repetitive labour, and allow users to focus their attention on meaningful opportunities rather than administrative overhead. More broadly, the project serves as an exploration into how autonomous software agents can support decision-making in domains traditionally dominated by manual effort.`,
+    technologies: ['Web Scraping', 'AI Agents', 'Automation', 'Python', 'NLP'],
+    imageUrl: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800&q=80',
   },
 ];
