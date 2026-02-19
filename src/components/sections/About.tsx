@@ -136,7 +136,7 @@ export function About() {
             <div className="mt-8">
               <a
                 href="mailto:jones.oscar.work@outlook.com"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-full font-medium hover:bg-primary/90 transition-colors"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-muted text-foreground rounded-full font-medium hover:bg-border transition-colors"
               >
                 <Mail className="w-4 h-4" />
                 <span>Get in touch</span>

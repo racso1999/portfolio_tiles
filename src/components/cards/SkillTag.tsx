@@ -52,10 +52,10 @@ export function SkillTag({ name, index, total }: SkillTagProps) {
       <div
         className="px-4 py-2 bg-card border rounded-full cursor-pointer select-none whitespace-nowrap"
         style={{
-          borderColor: isHovered ? '#4a7c59' : '#333',
+          borderColor: isHovered ? 'hsl(var(--foreground))' : '#333',
           transform: isHovered ? 'scale(1.1)' : 'scale(1)',
           boxShadow: isHovered
-            ? '0 0 20px rgba(74, 124, 89, 0.4), 0 4px 12px rgba(0, 0, 0, 0.3)'
+            ? '0 0 20px hsl(var(--foreground) / 0.25), 0 4px 12px rgba(0, 0, 0, 0.3)'
             : '0 4px 12px rgba(0, 0, 0, 0.2)',
           transition: 'all 0.3s ease',
         }}
@@ -63,7 +63,7 @@ export function SkillTag({ name, index, total }: SkillTagProps) {
         <span
           className="text-sm font-medium"
           style={{
-            color: isHovered ? '#4a7c59' : '#fff',
+            color: isHovered ? 'hsl(var(--foreground))' : '#fff',
             transition: 'color 0.3s ease',
           }}
         >

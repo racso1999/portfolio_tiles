@@ -12,19 +12,19 @@
     --card-foreground: 0 0% 100%;
     --popover: 0 0% 7%;
     --popover-foreground: 0 0% 100%;
-    --primary: 130 40% 35%;
+    --primary: 0 0% 90%;
     --primary-foreground: 0 0% 100%;
     --secondary: 0 0% 15%;
     --secondary-foreground: 0 0% 100%;
     --muted: 0 0% 15%;
     --muted-foreground: 0 0% 63%;
-    --accent: 130 40% 35%;
+    --accent: 0 0% 20%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
     --border: 0 0% 20%;
     --input: 0 0% 20%;
-    --ring: 130 40% 35%;
+    --ring: 0 0% 70%;
     --radius: 0.5rem;
   }
 }
@@ -65,14 +65,14 @@
   }
   
   .glow-blue {
-    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3),
-                0 0 40px rgba(59, 130, 246, 0.2),
-                0 0 60px rgba(59, 130, 246, 0.1);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.18),
+                0 0 40px rgba(255, 255, 255, 0.12),
+                0 0 60px rgba(255, 255, 255, 0.08);
   }
   
   .text-glow {
-    text-shadow: 0 0 20px rgba(59, 130, 246, 0.5),
-                 0 0 40px rgba(59, 130, 246, 0.3);
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.25),
+                 0 0 40px rgba(255, 255, 255, 0.15);
   }
   
   .card-hover {
@@ -83,7 +83,7 @@
     transform: translateY(-8px);
     border-color: hsl(var(--primary));
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4),
-                0 0 30px rgba(59, 130, 246, 0.15);
+                0 0 30px rgba(255, 255, 255, 0.08);
   }
   
   .sway {
@@ -123,10 +123,10 @@
   
   @keyframes pulseGlow {
     0%, 100% {
-      box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
     }
     50% {
-      box-shadow: 0 0 30px rgba(59, 130, 246, 0.6);
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.35);
     }
   }
   
@@ -201,10 +201,10 @@
 
 @keyframes pulse-glow {
   0%, 100% {
-    box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
   }
   50% {
-    box-shadow: 0 0 25px rgba(59, 130, 246, 0.6);
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.35);
   }
 }
 

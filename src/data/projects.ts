@@ -47,4 +47,49 @@ export const projects: Project[] = [
     imageUrl:
       'https://images.unsplash.com/photo-1557821552-17105176677c?w=800&q=80',
   },
+  {
+    title: 'Energy Load Forecasting Dashboard',
+    slug: 'energy-load-forecasting-dashboard',
+    description:
+      'Built a forecasting dashboard that combines time-series modeling with interactive visualizations to track demand, seasonal patterns, and anomaly spikes across multiple regions.',
+    technologies: ['Python', 'Time Series', 'Forecasting', 'Visualization'],
+    imageUrl:
+      'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&q=80',
+  },
+  {
+    title: 'Smart Irrigation Controller',
+    slug: 'smart-irrigation-controller',
+    description:
+      'Prototyped an IoT controller that optimizes watering schedules using soil moisture telemetry, weather data, and adaptive thresholds to reduce water waste.',
+    technologies: ['IoT', 'Embedded', 'Sensors', 'Data Pipelines'],
+    imageUrl:
+      'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&q=80',
+  },
+  {
+    title: 'Medical Image Triage Assistant',
+    slug: 'medical-image-triage-assistant',
+    description:
+      'Implemented a triage workflow that prioritizes scans for review, pairing lightweight classifiers with human-in-the-loop validation to improve turnaround time.',
+    technologies: ['Computer Vision', 'Python', 'ML Ops', 'Workflow Design'],
+    imageUrl:
+      'https://images.unsplash.com/photo-1526256262350-7da7584cf5eb?w=800&q=80',
+  },
+  {
+    title: 'Supply Chain Risk Monitor',
+    slug: 'supply-chain-risk-monitor',
+    description:
+      'Created a risk monitoring pipeline that aggregates vendor signals, lead time drift, and shipment delays into a single operational view.',
+    technologies: ['Data Engineering', 'Analytics', 'APIs', 'Automation'],
+    imageUrl:
+      'https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?w=800&q=80',
+  },
+  {
+    title: 'City Mobility Simulation',
+    slug: 'city-mobility-simulation',
+    description:
+      'Modeled traffic flows and public transit usage to evaluate policy changes, using simulation outputs to compare congestion and emissions tradeoffs.',
+    technologies: ['Simulation', 'Systems Modeling', 'Python', 'Optimization'],
+    imageUrl:
+      'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&q=80',
+  },
 ];

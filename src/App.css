@@ -77,14 +77,14 @@ section {
 
 /* Glow effects */
 .glow-primary {
-  box-shadow: 0 0 20px rgba(59, 130, 246, 0.4),
-              0 0 40px rgba(59, 130, 246, 0.2);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.18),
+              0 0 40px rgba(255, 255, 255, 0.1);
 }
 
 .glow-primary-strong {
-  box-shadow: 0 0 30px rgba(59, 130, 246, 0.6),
-              0 0 60px rgba(59, 130, 246, 0.4),
-              0 0 90px rgba(59, 130, 246, 0.2);
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.3),
+              0 0 60px rgba(255, 255, 255, 0.18),
+              0 0 90px rgba(255, 255, 255, 0.1);
 }
 
 /* Border gradient */
@@ -98,7 +98,7 @@ section {
   inset: 0;
   border-radius: inherit;
   padding: 1px;
-  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  background: linear-gradient(135deg, #e5e5e5, #6b6b6b);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
