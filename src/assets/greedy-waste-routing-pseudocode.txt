@@ -1,0 +1,125 @@
+WEIGHTED ALGORITHM:
+INPUTS:
+    road_network // list of tuples
+    bin_input // list of dictionaries
+
+INITIALISE STATES:
+    bin_objects = LIST //convert bin_inputs to objects
+    truck.num_bins = 0
+    truck.volume = 0
+    truck.zone = 0 (depot)
+    time_elapsed = 0
+    late_bins = 0
+    recycling_bins = 0
+    general_bins = 0
+    CREATE LINKED LIST(ordered_by_weight)
+	HEAD = NONE
+
+RUN()
+    FOR bin IN bin_objects
+        CALCULATE WEIGHTS
+            WEIGHT = travel_time_to_bin + deadline (b)
+            INSERT_BY_WEIGHT(bin -> ordered_by_weight)  // SORT BINS BY WEIGHT
+                    new_node = NODE(bin)
+                    CASE ONE // insert at head
+                    IF list EMPTY or HEAD.weight > new_node.weight
+                        new_node.next_node = head
+                        head = new_node
+                        length +1
+                        RETURN
+                    END IF
+
+                    CASE TWO// insert after head
+                    IF new_node.weight > HEAD.weight
+                        current_node = head
+                        WHILE new_node.weight > current_node.weight THEN
+                            new_node.next_node = current_node.next_node
+                            current_node.next_node = new_node
+                        END WHILE
+                        length +1
+
+    WHILE ordered_by_weight NOT EMPTY
+        TRUCK FULL?
+            NO
+                TRUCK.zone -> HEAD.zone // move truck to zone of bin with highest priority
+                time_elapsed += moving time
+                IF bin_window OPEN
+                    PICK_UP BIN()
+                            POP_FIRST(ordered_by_weight.HEAD)
+                            HEAD = HEAD.next_node // reassign head
+                            ordered_by_weight.length -1
+                            UPDATE(truck_status)
+
+                            RECALCULATE WEIGHTS/ RESORT()
+                                CREATE LINKED LIST(temp_list)
+                                    HEAD = NONE
+                                POP_FIRST(ordered_by_weight)
+                                    HEAD = HEAD.next_node // reassign head
+                                    ordered_by_weight.length -1
+                                RETURN bin_to_sort
+w
+                                INSERT_BY_WEIGHT(bin_to_sort -> temp_list)
+                                    new.node = NODE(bin_to_sort)
+                                    CASE ONE // insert at head
+                                            IF list EMPTY or HEAD.weight > new_node.weight
+                                                new_node.next_node = head
+                                                head = new_node
+                                                length +1
+                                                RETURN
+                                            END IF
+
+                                            CASE TWO// insert after head
+                                            IF new_node.weight > HEAD.weight
+                                                current_node = head
+                                                WHILE new_node.weight > current_node.weight THEN
+                                                    new_node.next_node = current_node.next_node
+                                                    current_node.next_node = new_node
+                                                END WHILE
+                                                length +1
+					    ordered_by_weight = temp_list # refactor
+
+                                                UPDATE(truck_status)
+
+                ELSE WAIT
+                time_elapsed += WAITING TIME
+                waiting_time += WAITING TIME
+
+            YES
+                RETURN TO DEPOT
+                    time_elapsed += movement_time
+                    UPDATE(truck_status)
+                    time_elapsed += empty_time
+                TRUCK.zone -> Depot // move truck to Depot
+                    time_elapsed += movement_time
+
+                              RECALCULATE WEIGHTS/ RESORT()
+                                CREATE LINKED LIST(temp_list)
+                                    HEAD = NONE
+                                POP_FIRST(ordered_by_weight)
+                                    HEAD = HEAD.next_node // reassign head
+                                    ordered_by_weight.length -1
+                                RETURN bin_to_sort
+
+                                INSERT_BY_WEIGHT(bin_to_sort -> temp_list)
+                                    new.node = NODE(bin_to_sort)
+                                    CASE ONE // insert at head
+                                            IF list EMPTY or HEAD.weight > new_node.weight
+                                                new_node.next_node = head
+                                                head = new_node
+                                                length +1
+                                                RETURN
+                                            END IF
+
+                                            CASE TWO// insert after head
+                                            IF new_node.weight > HEAD.weight
+                                                current_node = head
+                                                WHILE new_node.weight > current_node.weight THEN
+                                                    new_node.next_node = current_node.next_node
+                                                    current_node.next_node = new_node
+                                                END WHILE
+                                                length +1
+					    ordered_by_weight = temp_list # refactor
+
+        RETURN TO DEPOT
+        PRINT TOTALS
+        END

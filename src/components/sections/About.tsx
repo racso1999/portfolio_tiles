@@ -101,47 +101,26 @@ export function About() {
 
             <div className="space-y-4 text-muted-foreground leading-relaxed">
               <p>
-                I'm a Computer Science and Biology graduate with a passion for solving complex problems
-                through data-driven development. I specialize in building systems that combine
-                statistical analysis, machine learning, and robust software engineering.
+                At my core, I am a creative who loves to build things. My path into computer science is
+                anything but conventional, and that is something I consider an advantage.
               </p>
               <p>
-                My expertise spans Python, SQL, R, and bioinformatics tooling. I'm driven by the
-                intersection of data science and practical application—from autonomous systems to
-                database architecture and quantitative analysis.
+                I spent three years studying Biology at the University of Bristol, where I developed a
+                deep fascination with the elegance of biological systems and the logic that underpins
+                them. That curiosity naturally evolved into a passion for algorithms and computation.
+                The leap from biological systems to computer systems turned out to be a smaller one
+                than most people expect; both are fundamentally about structure, relationships, and
+                emergent complexity.
               </p>
               <p>
-                I'm constantly learning new technologies and approaches to solve interesting problems
-                at the intersection of biology and computer science.
+                I am now studying for an MSc in Computer Science at the University of Exeter, where I
+                am turning that interdisciplinary foundation into practical engineering skill. My
+                projects span Python, SQL, algorithms, and machine learning, and reflect the way I
+                approach problems generally: with curiosity, a desire to understand things from first
+                principles, and an instinct to build something real.
               </p>
             </div>
 
-            {/* Stats */}
-            <div className="grid grid-cols-3 gap-6 mt-8 pt-8 border-t border-border">
-              <div>
-                <div className="text-3xl font-bold text-foreground mb-1">4</div>
-                <div className="text-sm text-muted-foreground">Key Projects</div>
-              </div>
-              <div>
-                <div className="text-3xl font-bold text-foreground mb-1">10+</div>
-                <div className="text-sm text-muted-foreground">Technologies</div>
-              </div>
-              <div>
-                <div className="text-3xl font-bold text-foreground mb-1">MSc</div>
-                <div className="text-sm text-muted-foreground">Education</div>
-              </div>
-            </div>
-
-            {/* CTA */}
-            <div className="mt-8">
-              <a
-                href="mailto:jones.oscar.work@outlook.com"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-muted text-foreground rounded-full font-medium hover:bg-border transition-colors"
-              >
-                <Mail className="w-4 h-4" />
-                <span>Get in touch</span>
-              </a>
-            </div>
           </div>
         </div>
       </div>

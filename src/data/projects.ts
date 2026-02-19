@@ -1,4 +1,7 @@
 import droneVideo from '../assets/drone.mov';
+import cropDatabasePdf from '../assets/crop-data-sql-database.pdf';
+import cropDatabaseImage from '../assets/crop-data-sql-database.png';
+import wasteRoutingImage from '../assets/greedy-waste-routing.jpg';
 
 export interface Project {
   title: string;
@@ -7,89 +10,53 @@ export interface Project {
   technologies: string[];
   imageUrl?: string;
   videoUrl?: string;
+  pdfUrl?: string;
 }
 
 export const projects: Project[] = [
+  // Template for adding a new project:
+  // {
+  //   title: 'Project Title',
+  //   slug: 'project-slug',
+  //   description: 'Main project description...',
+  //   technologies: ['Tech 1', 'Tech 2'],
+  //   imageUrl: 'https://... or imported asset',
+  //   videoUrl: optional,
+  //   pdfUrl: optional,
+  // },
+  {
+    title: 'Crop Data SQL Database',
+    slug: 'crop-data-sql-database',
+    description:
+      'Designed a relational database and companion REST API for crop data, documenting schema decisions, normalization choices, and the tradeoffs between SQL and document-based models.',
+    technologies: ['SQL', 'Database Design', 'API Design', 'Data Modeling'],
+    pdfUrl: cropDatabasePdf,
+    imageUrl: cropDatabaseImage,
+  },
   {
     title: 'Autonomous Drone System',
     slug: 'autonomous-drone-system',
     description:
-      'This is one of those projects that I\'ve always wanted to do but felt I never had the skillset to achieve. However, after one year of learning Python, I decided with a university colleague to give it a try. We purchased a cheap drone off eBay and began programming.\n\nTo begin with, we started simple. We loaded YOLOv8 for object detection and added some simple commands for it to turn away from any detected objects. We then moved on to generating actionable hardware instructions from natural language commands.\n\nCurrently, we have a few models running on the drone, including YOLOv8 for object detection. This helps the drone begin to understand its surroundings. We also have a link to Groq, which allows the drone to take natural language input and generate commands on the fly for the drone to execute. For example: "fly around the room for 2 minutes and then come home."\n\nNext up is a return-to-charge feature. The plan is to 3D-print a station that the drone can land on and wirelessly charge from, moving the system towards fully autonomous, continuously operating behaviour.',
+      'This is one of those projects that I\'ve always wanted to do but felt I never had the skillset to achieve. However, after one year of learning Python, I decided with a university colleague to give it a try. We purchased a cheap drone off eBay and began programming.\n\nTo begin with, we started simple. We loaded YOLOv8 for object detection and added some simple commands for it to turn away from any detected objects. We then moved on to generating actionable hardware instructions from natural language commands.\n\nCurrently, we have a few models running on the drone, including YOLOv8 for object detection. This helps the drone begin to understand its surroundings. We also have a link to Groq, which allows the drone to take natural language input and generate commands on the fly for the drone to execute. For example: "fly around the room for 2 minutes and then come home."\n\nThis project has advanced my confidence in developing real-time algorithms and software-hardware interaction. Working alongside another engineer has also been a positive change, whereby I\'ve been able to develop my appreciation for sharing work load and working to each other\'s unique abilities. We collaborate mainly through Git, working on separate branches and merging successful features.\n\nNext up is a return-to-charge feature. The plan is to 3D-print a station that the drone can land on and wirelessly charge from, moving the system towards fully autonomous, continuously operating behaviour.',
     technologies: ['Python', 'Control Systems', 'Machine Learning', 'Robotics'],
     videoUrl: droneVideo,
     imageUrl:
       'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&q=80',
   },
   {
-    title: 'AI Job Application Agentic System',
+    title: 'Greedy Waste Routing Optimizer',
     slug: 'ai-job-application-agentic-system',
     description:
-      'Built an AI-driven agentic system to automate and assist the job application process, leveraging language models, workflow automation, and structured decision logic to streamline application generation and tracking.',
-    technologies: ['Python', 'LLMs', 'Automation', 'Data Processing'],
-    imageUrl:
-      'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80',
-  },
-  {
-    title: 'Multiple Sequence Alignment Analysis',
-    slug: 'multiple-sequence-alignment-analysis',
-    description:
-      'Conducted a comprehensive computational analysis comparing T-Coffee and MUSCLE multiple sequence alignment algorithms, evaluating accuracy, performance, and biological relevance using real genomic datasets.',
-    technologies: ['R', 'Bioinformatics', 'Statistical Analysis', 'Data Visualization'],
-    imageUrl:
-      'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80',
-  },
-  {
-    title: 'Crop Data SQL Database',
-    slug: 'crop-data-sql-database',
-    description:
-      'Designed and implemented a relational SQL database for agricultural crop data, including schema design, data querying, and structured data management to support efficient analysis and retrieval.',
-    technologies: ['SQL', 'MySQL', 'Database Design', 'Data Management'],
-    imageUrl:
-      'https://images.unsplash.com/photo-1557821552-17105176677c?w=800&q=80',
-  },
-  {
-    title: 'Energy Load Forecasting Dashboard',
-    slug: 'energy-load-forecasting-dashboard',
-    description:
-      'Built a forecasting dashboard that combines time-series modeling with interactive visualizations to track demand, seasonal patterns, and anomaly spikes across multiple regions.',
-    technologies: ['Python', 'Time Series', 'Forecasting', 'Visualization'],
-    imageUrl:
-      'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&q=80',
-  },
-  {
-    title: 'Smart Irrigation Controller',
-    slug: 'smart-irrigation-controller',
-    description:
-      'Prototyped an IoT controller that optimizes watering schedules using soil moisture telemetry, weather data, and adaptive thresholds to reduce water waste.',
-    technologies: ['IoT', 'Embedded', 'Sensors', 'Data Pipelines'],
-    imageUrl:
-      'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&q=80',
-  },
-  {
-    title: 'Medical Image Triage Assistant',
-    slug: 'medical-image-triage-assistant',
-    description:
-      'Implemented a triage workflow that prioritizes scans for review, pairing lightweight classifiers with human-in-the-loop validation to improve turnaround time.',
-    technologies: ['Computer Vision', 'Python', 'ML Ops', 'Workflow Design'],
-    imageUrl:
-      'https://images.unsplash.com/photo-1526256262350-7da7584cf5eb?w=800&q=80',
-  },
-  {
-    title: 'Supply Chain Risk Monitor',
-    slug: 'supply-chain-risk-monitor',
-    description:
-      'Created a risk monitoring pipeline that aggregates vendor signals, lead time drift, and shipment delays into a single operational view.',
-    technologies: ['Data Engineering', 'Analytics', 'APIs', 'Automation'],
-    imageUrl:
-      'https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?w=800&q=80',
-  },
-  {
-    title: 'City Mobility Simulation',
-    slug: 'city-mobility-simulation',
-    description:
-      'Modeled traffic flows and public transit usage to evaluate policy changes, using simulation outputs to compare congestion and emissions tradeoffs.',
-    technologies: ['Simulation', 'Systems Modeling', 'Python', 'Optimization'],
-    imageUrl:
-      'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&q=80',
+      `Efficient waste management is a logistical challenge that directly impacts urban sustainability, operational costs, and public health. To address this, I developed a greedy heuristic algorithm designed to optimize truck routing for municipal waste collection across a dynamic city grid.
+
+    The algorithm tackles a variant of the Vehicle Routing Problem (VRP), a well-studied class of combinatorial optimization problems with real-world implications for fleet management and city planning. The core challenge: given a set of collection points distributed across a municipality, assign and sequence routes for a fixed fleet of trucks in a way that minimizes total travel distance while ensuring all collection points are serviced within a defined time window.
+
+    My approach draws on greedy nearest-neighbor heuristics, where each truck iteratively selects its next collection point based on proximity and priority weighting. Through research into classical VRP literature, I found that while exact solutions become computationally intractable at scale, well-tuned heuristics can produce near-optimal results in a fraction of the time, making them far more practical for real-world deployment. I incorporated a priority scoring system that factors in collection frequency requirements and road network constraints to further refine route quality.
+
+    The algorithm was evaluated against randomized city grid simulations, consistently reducing theoretical total route distance compared to naive sequential scheduling. Key takeaways from the project included the importance of balancing solution quality against runtime efficiency, and the surprising degree to which small changes in priority weighting can cascade into significantly different routing outcomes.
+
+    This project deepened my understanding of combinatorial optimization, graph traversal, and the practical trade-offs involved in applying algorithmic solutions to public infrastructure problems.`,
+    technologies: ['Optimization', 'Algorithms', 'Heuristics', 'Graph Theory'],
+    imageUrl: wasteRoutingImage,
   },
 ];
