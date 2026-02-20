@@ -1,4 +1,4 @@
-FROM node:20
+FROM node:20 AS builder
 
 WORKDIR /app
 
@@ -6,7 +6,11 @@ COPY package*.json ./
 RUN npm install --legacy-peer-deps
 
 COPY . .
+RUN npm run build
 
-EXPOSE 5173
+# Production stage
+FROM nginx:alpine
 
-CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
+COPY --from=builder /app/dist /usr/share/nginx/html
+
+EXPOSE 80
