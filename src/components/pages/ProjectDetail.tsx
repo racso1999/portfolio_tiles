@@ -23,10 +23,75 @@ export function ProjectDetail({ slug, onNavigate }: ProjectDetailProps) {
     'I first encountered SQL when working on a bioinformatics project during my undergraduate years. I had no idea what it meant or what it did. I don\'t think I even knew what a database was. For that matter, I didn\'t know much about them at all. This is where this project comes into play.\n\nI entered this project with a clear goal: to form a fundamental understanding of relational databases from the ground up. That includes sourcing the data, deciding the best database type to use, finding the relationships and cardinalities between the data structures, and implementing the database using SQL.\n\nBesides the obvious, this project demonstrated that there is more than one way to skin a cat when it comes to database design. I now understand where and when to use relational and non-relational databases, along with the pros and cons of both concepts.\n\nThis project also highlighted the importance of data modeling and schema design. I learned how to identify entities, define relationships, and normalize data to reduce redundancy. The process of designing the database schema was iterative, requiring me to balance theoretical best practices with practical considerations based on the specific use case.\n\nCheck out the full report below for a detailed walkthrough of the project, including the data sourcing process, design decisions, and implementation details.';
 
   useEffect(() => {
-    if (isCropDatabase || isWasteRouting) {
+    if (isCropDatabase || isWasteRouting || isAgenticSystem) {
       Prism.highlightAll();
     }
-  }, [isCropDatabase, isWasteRouting]);
+  }, [isCropDatabase, isWasteRouting, isAgenticSystem]);
+
+  const renderInlineBold = (text: string) => {
+    const segments = text.split(/\*\*(.*?)\*\*/g);
+    return segments.map((segment, index) =>
+      index % 2 === 1 ? (
+        <strong key={`bold-${index}`} className="text-foreground">
+          {segment}
+        </strong>
+      ) : (
+        segment
+      )
+    );
+  };
+
+  const renderTextBlocks = (text: string) => {
+    const paragraphs = text
+      .split(/\n\n+/)
+      .map((paragraph) => paragraph.replace(/^\s+/gm, '').trim())
+      .filter(Boolean);
+
+    return paragraphs.map((paragraph, index) => (
+      <p
+        key={`paragraph-${index}`}
+        className="text-muted-foreground text-lg leading-relaxed mb-6"
+      >
+        {renderInlineBold(paragraph)}
+      </p>
+    ));
+  };
+
+  const renderMarkdownBlocks = (content: string) => {
+    const blocks: React.ReactNode[] = [];
+    const codeFence = /```(\w+)?\n([\s\S]*?)```/g;
+    let lastIndex = 0;
+    let match: RegExpExecArray | null;
+    let key = 0;
+
+    while ((match = codeFence.exec(content)) !== null) {
+      const [fullMatch, language, code] = match;
+      const textSegment = content.slice(lastIndex, match.index);
+      if (textSegment.trim()) {
+        blocks.push(...renderTextBlocks(textSegment));
+      }
+
+      blocks.push(
+        <div key={`code-${key}`} className="mb-8">
+          <pre className="rounded-2xl border border-border bg-[#0b0b0b] text-[#f5f5f5] p-6 overflow-x-auto text-sm">
+            <code className={`language-${language ?? 'text'}`}>
+              {code.trimEnd()}
+            </code>
+          </pre>
+        </div>
+      );
+
+      key += 1;
+      lastIndex = match.index + fullMatch.length;
+    }
+
+    const remainingText = content.slice(lastIndex);
+    if (remainingText.trim()) {
+      blocks.push(...renderTextBlocks(remainingText));
+    }
+
+    return blocks;
+  };
 
 
   if (!project) {
@@ -73,6 +138,8 @@ export function ProjectDetail({ slug, onNavigate }: ProjectDetailProps) {
               <p className="text-muted-foreground text-lg leading-relaxed mb-10 whitespace-pre-line">
                 {project.description}
               </p>
+            ) : isAgenticSystem ? (
+              <div className="mb-10">{renderMarkdownBlocks(project.description)}</div>
             ) : (
               <p className="text-muted-foreground text-lg leading-relaxed mb-10 whitespace-pre-line">
                 {project.description}

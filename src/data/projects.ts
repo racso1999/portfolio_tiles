@@ -68,34 +68,171 @@ Check out the full report below for a detailed walkthrough of the project, inclu
     imageUrl: wasteRoutingImage,
   },
   {
-    title: 'Agentic Application System',
+    title: 'Autonomous Job Application Platform',
     slug: 'agentic-application-system',
     description:
-      `This project began out of frustration with the graduate job market. After applying to countless roles with limited success, it became clear that the modern application process had largely become a numbers game. The market is heavily oversaturated, and much of the workflow involves repetitive manual effort rather than meaningful decision-making. Hours are spent searching, filtering, rewriting applications, and submitting similar information across multiple platforms, often with little feedback or transparency.
+      `**Autonomous Job Application Platform**
 
-Rather than continuing to invest time into a largely manual and inefficient process, I approached the problem from an engineering perspective: if a workflow is repetitive, rule-based, and scalable, it should be possible to automate it. What initially started as a personal experiment evolved into a collaborative project between myself and another engineer, focused on exploring agentic workflows within the context of job discovery and application automation.
+**A Note Before You Read**
+  We want to be upfront: we do not advocate for using AI agents to blindly apply for jobs on your behalf. The modern application process is broken in ways that this system deliberately exposes. When a single role receives hundreds of near-identical applications, the response is to filter harder, not hire better, and automating applications at scale only accelerates that cycle. This project is a proof of concept, built to highlight the inefficiencies baked into the current system and explore what autonomous agentic workflows are genuinely capable of. It is as much a critique as it is a technical achievement, and any real-world use should sit alongside, not replace, genuine human engagement with the process.
 
-The system is designed as a multi-stage pipeline that automates the discovery, analysis, and preparation of job applications. Each stage performs a specialised task and passes structured information forward, transforming unstructured internet data into actionable decisions. At a high level, the workflow progresses from web discovery, to data extraction, to intelligent evaluation, and finally to application preparation.
+**The Problem**
+  This project started out of frustration. Applying for graduate jobs is tedious, repetitive, and increasingly feels like a numbers game. Most of the time spent is not on meaningful decision-making but on searching, filtering, and rewriting the same documents over and over. We kept asking ourselves: if a process is rule-based, repetitive, and scalable, why are we doing it manually? So we built a system to do it for us.
 
-The first component of the system is a custom-built job discovery engine. Instead of relying solely on traditional job boards, the platform actively searches the web using a web crawler, sometimes referred to as a web spider. The crawler begins from a set of predefined seed URLs determined by configurable parameters such as desired job role, geographic location, relevant technologies, and keyword preferences. From these starting points, the crawler navigates the web by following hyperlinks between pages, gradually expanding its search space.
+  The platform is a fully autonomous multi-agent pipeline that finds jobs, scores them against your profile, generates tailored CVs and cover letters, and submits applications end to end. Built in collaboration with a fellow engineer, the system is coordinated by an orchestration engine managing four specialised agents: a Scout, a Matcher, a document generation agent, and a Form Filler, all built on FastAPI, Next.js 14, LiteLLM, Playwright, aiosqlite, and Docker.
 
-Conceptually, the web is treated as a graph structure in which webpages represent nodes and hyperlinks represent connections between them. The crawler performs a controlled traversal of this graph, evaluating each page for relevance before deciding whether to continue exploring that branch. This allows the system to remain focused on job-related content while avoiding unrelated areas of the web. The result is a continuously expanding collection of potentially relevant job listing pages gathered automatically rather than manually searched.
+**System Overview**
+  The system is a job discovery and application pipeline with stateful orchestration. A single run moves from discovery to scoring, then document generation, and finally submission.
 
-Once relevant pages are identified, the system deploys a scraping module responsible for extracting structured information from each webpage. Job listings vary widely in formatting and layout depending on the hosting platform, so the scraper converts unstructured HTML content into a consistent dataset. Information such as job title, company name, location, required skills, job description, and application links are extracted and standardised. This stage effectively transforms raw web content into machine-readable data that can be analysed programmatically.
+  \`\`\`python
+  class AutoApplyEngine:
+    async def process_run(self, run):
+      jobs = await self.scout.find_jobs(run.prefs)
+      for job in jobs:
+        score, rationale = await self.matcher.score(job, run.profile)
+        if score < run.prefs.min_match_score:
+          continue
 
-Because listings originate from multiple sources, a normalisation stage follows. Here, the system cleans and standardises collected data to ensure consistency across entries. Duplicate postings are removed, formatting inconsistencies are corrected, and job attributes are mapped into a unified schema. The cleaned data is then stored in a structured database, enabling efficient querying and downstream processing independent of the original website layouts.
+        docs = await self.generator.build_documents(job, run.profile)
+        if not run.prefs.dry_run:
+          await self.form_filler.submit(job, docs)
 
-The core innovation of the project lies in its agentic evaluation layer. Rather than simply aggregating job listings, the system attempts to replicate the decision-making process a candidate would normally perform manually. An AI-driven agent analyses each role against predefined criteria such as skill alignment, relevance to career goals, inferred seniority level, and estimated suitability. Instead of forcing the user to manually filter hundreds of listings, the system automatically prioritises opportunities that best match the defined profile.
+      await self.state.mark_complete(run.id)
+  \`\`\`
 
-This transforms the workflow from a broad "collect everything and manually filter later" approach into a targeted pipeline where intelligent filtering occurs automatically. The agent acts as a decision-making intermediary, reducing cognitive load while increasing efficiency.
+  **Finding the Jobs**
+  The Scout agent crawls Indeed, LinkedIn, Adzuna, and Glassdoor simultaneously. Rather than scraping each platform naively, we modelled the web as a graph, pages are nodes, hyperlinks are edges, and built a crawler that evaluates each branch for relevance before deciding whether to follow it.
 
-For roles that pass evaluation, the system proceeds to an application preparation stage. Here, application materials can be generated or adapted dynamically based on job requirements. Relevant experiences are emphasised, responses can be tailored to specific postings, and application-ready information is prepared automatically. The intention is not simply to mass-submit identical applications, but to produce context-aware submissions aligned with individual roles while removing repetitive manual effort.
+  \`\`\`python
+  class GraphCrawler:
+    async def crawl(self, start_urls, query_profile):
+      queue = deque(start_urls)
+      while queue:
+        url = queue.popleft()
+        page = await self.fetch(url)
+        score = self.ranker.relevance(page, query_profile)
+        if score < 0.5:
+          continue
 
-The project is fundamentally an exploration of agentic workflow design, where independent components operate as specialised agents collaborating toward a shared objective. Each agent has a defined responsibility, access to structured context, and the ability to trigger subsequent actions within the pipeline. The crawler discovers opportunities, the scraper extracts information, the evaluation agent assesses relevance, and the application agent prepares outputs. This modular architecture allows individual components to evolve independently without requiring a redesign of the entire system.
+        yield self.extract_listing(page)
+        queue.extend(self.links(page))
+  \`\`\`
 
-From a systems perspective, the project integrates concepts across multiple areas of computer science, including graph traversal algorithms, information retrieval, web scraping, natural language processing, automation pipelines, and agent-based system design. The architecture prioritises modularity and extensibility so that new evaluation strategies, data sources, or automation agents can be introduced incrementally.
+  Search queries are generated from your CV using an LLM so the system understands intent rather than just matching keywords. Because the same role often appears across multiple platforms, hash-based deduplication cleans the data before it ever hits the database.
 
-Ultimately, the goal of the project is not simply to automate job applications, but to rethink how individuals interact with large-scale digital processes. By reframing job searching as an engineering problem, the system demonstrates how agentic systems can augment human workflows, reduce repetitive labour, and allow users to focus their attention on meaningful opportunities rather than administrative overhead. More broadly, the project serves as an exploration into how autonomous software agents can support decision-making in domains traditionally dominated by manual effort.`,
+  \`\`\`python
+  def dedupe(listings):
+    seen = set()
+    unique = []
+    for item in listings:
+      key = sha256(f"{item.company}|{item.role}|{item.location}").hexdigest()
+      if key in seen:
+        continue
+      seen.add(key)
+      unique.append(item)
+    return unique
+  \`\`\`
+
+  In practice this produces 50 to 100 structured, deduplicated listings in under 30 seconds.
+
+  **Deciding What Is Worth Applying To**
+  Not every job found is worth applying to, and reading dozens of descriptions manually is one of the biggest time sinks in the process. The Matcher agent solves this by scoring each job against your CV across four weighted criteria: technical skills, experience fit, location, and salary. It returns a score between 0.0 and 1.0 with explainable reasoning, and anything below your configured threshold is skipped automatically.
+
+  \`\`\`python
+  async def score_job(job, cv_text):
+    weights = {
+      "technical_skills": 0.40,
+      "experience_fit": 0.30,
+      "location": 0.15,
+      "salary": 0.15,
+    }
+    return await llm.match(job.description, cv_text, weights=weights)
+  \`\`\`
+
+  In testing the matcher achieved 92% agreement with manual review and scores 100 jobs in under 20 seconds, effectively eliminating the filtering problem entirely.
+
+  **Generating the Applications**
+  For jobs that clear the threshold, the system detects the role type, selects the appropriate base CV and LaTeX template, and uses an LLM to generate tailored content. This is not find-and-replace. The system reasons about which projects to highlight, which skills to foreground, and how to frame your experience for the specific role.
+
+  \`\`\`python
+  async def build_documents(job, profile):
+    role_type = detect_role_type(job.description)
+    base_cv = load_base_cv(role_type)
+    template = load_template(role_type)
+
+    payload = await llm.generate(role_type, job, base_cv, profile)
+    validated = ApplicationPayload.model_validate(payload)
+
+    cv_pdf = latex.render(validated.cv, template)
+    cover_pdf = latex.render(validated.cover_letter, template)
+    return cv_pdf, cover_pdf
+  \`\`\`
+
+  Because LLMs occasionally return malformed output or hallucinate details, we built strict Pydantic validation, retry logic with exponential backoff, and fallback strategies so a bad response never brings the pipeline down.
+
+  \`\`\`python
+  async def safe_generate(request, retries=3):
+    delay = 0.5
+    for attempt in range(retries):
+      try:
+        return await llm.generate(request)
+      except ValidationError:
+        await asyncio.sleep(delay)
+        delay *= 2
+    return fallback_template(request)
+  \`\`\`
+
+  **Running Autonomously**
+  The entire pipeline runs continuously via a background worker that polls for pending jobs every 30 seconds. You set your preferences once and the system handles everything else.
+
+  \`\`\`python
+  async def worker_loop(engine, state):
+    while True:
+      run = await state.next_pending()
+      if run:
+        await engine.process_run(run)
+      await asyncio.sleep(30)
+  \`\`\`
+
+  We have had it run overnight and woken up to over 20 submitted applications.
+
+  **Async Performance and Throughput**
+  Early versions froze the server on every network request or LLM call. After migrating every database call, HTTP request, and file operation to async equivalents, throughput improved by roughly 20x and p95 latency dropped from 2500ms to 450ms.
+
+  \`\`\`python
+  async with httpx.AsyncClient() as client:
+    pages = await asyncio.gather(
+      client.get(url) for url in target_urls
+    )
+  \`\`\`
+
+  State is tracked in SQLite with Write-Ahead Logging for concurrency, with each application moving through clearly defined stages from discovery to submission.
+
+  \`\`\`sql
+  CREATE TABLE runs (
+    id TEXT PRIMARY KEY,
+    user_id TEXT NOT NULL,
+    status TEXT CHECK(status IN ('pending','running','completed','failed')),
+    config JSON,
+    started_at TIMESTAMP,
+    completed_at TIMESTAMP
+  );
+
+  CREATE TABLE jobs (
+    id TEXT PRIMARY KEY,
+    run_id TEXT REFERENCES runs(id),
+    company TEXT,
+    role TEXT,
+    match_score REAL,
+    status TEXT,
+    submitted_at TIMESTAMP
+  );
+  \`\`\`
+
+  **What We Took Away**
+  This is the most technically demanding thing we have built. Working closely with a fellow engineer pushed us to think more carefully about system design, code organisation, and how to divide ownership of a complex codebase cleanly. Async concurrency is genuinely difficult, tracking blocking calls and debugging race conditions requires a real understanding of Python's event loop internals. Web scraping taught us more than we expected about browser fingerprinting and detection avoidance. Integrating LLMs in a production context means treating their failures as a first-class engineering concern, not an edge case. What the project ultimately reinforced is that the hardest part of software engineering is not writing code that works, it is designing systems that keep working when things go wrong.
+
+  Source code and live demo available upon request.`,
     technologies: ['Web Scraping', 'AI Agents', 'Automation', 'Python', 'NLP'],
     imageUrl: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800&q=80',
   },
