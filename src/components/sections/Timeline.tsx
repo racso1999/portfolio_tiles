@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect } from 'react';
 import { ProjectCard } from '../cards/ProjectCard';
 import { projects } from '../../data/projects';
 
@@ -8,13 +8,12 @@ interface TimelineProps {
 
 export function Timeline({ onOpenProject }: TimelineProps) {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setIsVisible(true);
+          // Intersection observer for future animations
         }
       },
       { threshold: 0.1 }

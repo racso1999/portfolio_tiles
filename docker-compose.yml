@@ -1,14 +1,9 @@
 services:
   app:
-    image: racso1999/portfolio-tiles:latest
+    image: racso1999/portfolio_tiles-app:latest
     container_name: portfolio_tiles_app
     ports:
-      - "5173:5173"
-    volumes:
-      - .:/app
-      - /app/node_modules
+      - "80:80"
     environment:
-      - NODE_ENV=development
-    stdin_open: true
-    tty: true
-    restart: unless-stopped
+      - NODE_ENV=production
+    restart: always
