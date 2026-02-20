@@ -16,7 +16,7 @@ export function ProjectDetail({ slug, onNavigate }: ProjectDetailProps) {
   const project = projects.find((item) => item.slug === slug);
   const isCropDatabase = project?.slug === 'crop-data-sql-database';
   const isDroneProject = project?.slug === 'autonomous-drone-system';
-  const isWasteRouting = project?.slug === 'ai-job-application-agentic-system';
+  const isWasteRouting = project?.slug === 'greedy-waste-routing-optimizer';
   const isAgenticSystem = project?.slug === 'agentic-application-system';
   const showFullDetail = isCropDatabase || isDroneProject || isWasteRouting || isAgenticSystem;
   const cropDatabaseIntro =

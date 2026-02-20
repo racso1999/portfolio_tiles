@@ -101,23 +101,10 @@ export function About() {
 
             <div className="space-y-4 text-muted-foreground leading-relaxed">
               <p>
-                At my core, I am a creative who loves to build things. My path into computer science is
-                anything but conventional, and that is something I consider an advantage.
+                I am a creative at my core, who finds meaning through building things. My path into computer science is unconventional, and I consider that an advantage. Three years studying Biology at the University of Bristol gave me a deep appreciation for the logic underpinning complex systems. That curiosity translated naturally into a passion for algorithms and computation. Biological systems and computer systems are both, at their core, about structure, relationships, and emergent complexity.
               </p>
               <p>
-                I spent three years studying Biology at the University of Bristol, where I developed a
-                deep fascination with the elegance of biological systems and the logic that underpins
-                them. That curiosity naturally evolved into a passion for algorithms and computation.
-                The leap from biological systems to computer systems turned out to be a smaller one
-                than most people expect; both are fundamentally about structure, relationships, and
-                emergent complexity.
-              </p>
-              <p>
-                I am now studying for an MSc in Computer Science at the University of Exeter, where I
-                am turning that interdisciplinary foundation into practical engineering skill. My
-                projects span Python, SQL, algorithms, and machine learning, and reflect the way I
-                approach problems generally: with curiosity, a desire to understand things from first
-                principles, and an instinct to build something real.
+                I am now completing an MSc in Computer Science at the University of Exeter, turning that foundation into practical engineering skill across modules in stochastic processes, machine learning, data systems, algorithms and architectures, and more.
               </p>
             </div>
 
